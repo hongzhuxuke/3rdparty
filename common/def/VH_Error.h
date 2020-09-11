@@ -1,0 +1,73 @@
+#ifndef __VH_ERROR__H_INCLUDED__
+#define __VH_ERROR__H_INCLUDED__
+
+#pragma once
+#include "VH_Macro.h"
+
+//成功
+#define CRE_OK								((HRESULT)0x00000000L)
+
+//失败
+#define CRE_FALSE							((HRESULT)0x00000001L)
+
+//可用的
+#define CRE_ENABLE							((HRESULT)0x00000002L)
+
+//禁用的
+#define CRE_DISABLE							((HRESULT)0x00000003L)
+
+//可见
+#define CRE_VISIBLE 						((HRESULT)0x00000004L)
+
+//不可见
+#define CRE_NOTVISIBLE 						((HRESULT)0x00000005L)
+
+//只读
+#define CRE_ONLYREAD	 					((HRESULT)0x00000006L)
+
+//读写的
+#define CRE_READWRITE	 					((HRESULT)0x00000007L)
+
+//非法参数
+#define CRE_INVALIDARG 						((HRESULT)0x00000101L)
+
+//指定的接口没有实现
+#define CRE_NOINTERFACE 					((HRESULT)0x00000102L)
+
+//目标没有找到
+#define CRE_OBJECT_NOTFOUND 				((HRESULT)0x00000103L)
+
+//目标已存在
+#define CRE_OBJECT_ALREADY_EXISTS 			((HRESULT)0x00000104L)
+
+//未初始化
+#define CRE_OBJECT_UNINITIALIZED  			((HRESULT)0x00000105L)
+
+//已初始化
+#define CRE_OBJECT_ALREADY_INITIALIZED 		((HRESULT)0x00000106L)
+
+//未绑定
+#define CRE_NO_BINDINGS						((HRESULT)0x00000107L)
+
+//函数没有实现
+#define CRE_NOTIMPL							((HRESULT)0x00000108L)
+
+//对象未注册
+#define CRE_OBJECT_UNREGISTERED  			((HRESULT)0x00000109L)
+
+//对象已注册
+#define CRE_OBJECT_ALREADY_REGISTERED	 	((HRESULT)0x00000110L)
+
+//分配内存失败
+#define CRE_MEMORY_ALLOCATION_FAILED	 	((HRESULT)0x00000111L)
+
+//内存溢出 
+#define CRE_OUTOFMEMORY				 		((HRESULT)0x00000112L)
+
+//超时
+#define CRE_TIMEOUT			 				((HRESULT)0x00000113L)
+
+//未找到
+#define CRE_NOTFOUND			 			((HRESULT)0x00000114L)
+
+#endif //__VH_ERROR__H_INCLUDED__
