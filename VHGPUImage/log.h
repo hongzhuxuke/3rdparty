@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include <stdarg.h>
-//#include <common/vhall_log.h>
+#include <common/vhall_log.h>
 
 static inline void Print(std::string header, const char* fmt, ...) {
   va_list ap;
