@@ -24,13 +24,14 @@ namespace vhall {
     "     gl_FragColor = texture2D(inputImageTexture, textureCoordinate);\n"
     "}";
 
-  const float VHGPUImageFilter::cubes[8] = {
-            -1.0f, -1.0f,
-            1.0f, -1.0f,
-            -1.0f, 1.0f,
-            1.0f, 1.0f,
+  // 创建顶点 Buffer，创建纹理 Buffer
+  const float VHGPUImageFilter::cubes[8] = { // 顶点坐标
+            -1.0f, -1.0f, // 左下角坐标
+            1.0f, -1.0f,  // 右下角坐标
+            -1.0f, 1.0f,  // 左上角坐标
+            1.0f, 1.0f,   // 右上角坐标
   };
-  const float VHGPUImageFilter::textureCoords[8] = {
+  const float VHGPUImageFilter::textureCoords[8] = { // 纹理坐标
             0.0f, 0.0f,
             1.0f, 0.0f,
             0.0f, 1.0f,
@@ -74,7 +75,7 @@ namespace vhall {
   }
 
   void VHGPUImageFilter::onDraw(int textureId, const GLfloat * cubeBuffer, const GLfloat * textureBuffer) {
-    glUseProgram(glProgId);
+    glUseProgram(glProgId); // 调用着色器程序
     checkGLError("glUseProgram");
     runPendingOnDrawTasks();
     if (!bInitialized) {
@@ -84,7 +85,7 @@ namespace vhall {
     if (textureId != -1) {
       glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, textureId);
-      glBindVertexArray(vao);
+      glBindVertexArray(vao); // 执行一次绑定的VAO的渲染
       glUniform1i(glUniformTexture, 0);
       checkGLError("texture2");
     }
@@ -97,8 +98,8 @@ namespace vhall {
   }
 
   void VHGPUImageFilter::onInit() {
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
+    glGenVertexArrays(1, &vao); // 创建VAOc
+    glBindVertexArray(vao); // 绑定 激活
 
     glProgId = VHShaderUtil::createProgram(vertexShader, fragmentShader);
     glAttribPosition = glGetAttribLocation(glProgId, "position");
@@ -117,8 +118,16 @@ namespace vhall {
     glBufferSubData(GL_ARRAY_BUFFER, 32, 32, textureCoords);
     /* 解释顶点数据 */
     glVertexAttribPointer(glAttribPosition, 2, GL_FLOAT, false, 2 * sizeof(float), (void*)0);
+    /*
+     * 第一个参数为顶点着色器中layout (location=0) in vec3 position;中的location的值。
+     * 第二个参数为第二个参数指定顶点属性的维数，如果是vec3，它由3个值组成，所以大小是3。
+     * 第三个参数为数据的类型。
+     * 第四个参数为是否希望数据被标准化，如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。
+     * 第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。设置为0的意思是让OpenGL自己去识别步长。
+     * 最后一个参数表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是0
+    */
     checkGLError("glVertexAttribPointer postion");
-    glEnableVertexAttribArray(glAttribPosition);
+    glEnableVertexAttribArray(glAttribPosition); // 使vbo的内存变为可用状态
     checkGLError("glEnableVertexAttribArray postion");
     glVertexAttribPointer(glAttribTextureCoordinate, 2, GL_FLOAT, false, 2 * sizeof(float), (void*)(sizeof(cubes)));
     checkGLError("glVertexAttribPointer Coordinate");
